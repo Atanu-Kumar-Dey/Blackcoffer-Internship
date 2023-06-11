@@ -40,10 +40,11 @@ async function storeData() {
 
 
 const connectDB = async() => {
+    console.log("process.env.MONGODB_ATLAS_URI", process.env.MONGODB_ATLAS_URI);
     mongoose
         .connect(process.env.MONGODB_ATLAS_URI, {
             useNewUrlParser: true,
-            useUnifiedTopology: true,
+            useUnifiedTopology: true, 
         })
         .then(() => {
             console.log("Connected to MongoDB");

@@ -20,7 +20,7 @@ const BarComponent = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:4000/api/2018/Energy"
+          "http://localhost:4000/api/sector-endYear?sector=Energy&end_year=2018"
         );
         const data = response.data;
         setData(data);

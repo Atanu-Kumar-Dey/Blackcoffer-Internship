@@ -1,75 +1,59 @@
 const mongoose = require("mongoose");
 const Data = require("../models/dataModel");
+const Apifeatures = require("../utils/apiFeatures");
 
-const getDistinctIntensities = async(req, res, next) => {
+
+
+const bySectorEndYear =async (req, res) => {
     try {
-        const distinctIntensities = await Data.distinct("intensity");
-        res.locals.distinctIntensities = distinctIntensities;
-        res.send(distinctIntensities);
-        next();
+  
+ const apiFeature=  new  Apifeatures(Data.find(), req.query).filter();
+ console.log(req.query)
+ let data = await apiFeature.query;
+
+ const intensity = data.map((entry) => ({
+    topic: entry.topic,
+    intensity: entry.intensity,
+    relevance: entry.relevance,
+    likelihood: entry.likelihood,
+}));
+console.log(intensity)
+ res.json(intensity)
+
+
+     
+
+
     } catch (error) {
-        console.error("Error retrieving distinct intensities:", error);
-        res.status(500).json({ message: "Internal Server Error" });
+        console.log(error);
     }
 };
-
-const getDistinctImpact = async(req, res, next) => {
+const bySectorAndTopic =async (req, res) => {
     try {
-        const distinctImpact = await Data.distinct("impact");
-        res.locals.distinctImpact = distinctImpact;
-        res.send(distinctImpact);
-        next();
-    } catch (error) {
-        console.error("Error retrieving distinct impact:", error);
-        res.status(500).json({ message: "Internal Server Error" });
-    }
-};
-const getDistinctSector = async(req, res, next) => {
-    try {
-        const distinctSector = await Data.distinct("sector");
-        res.locals.distinctSector = distinctSector;
-        res.send(distinctSector);
-        next();
-    } catch (error) {
-        console.error("Error retrieving distinct sector:", error);
-        res.status(500).json({ message: "Internal Server Error" });
-    }
-};
-
-const getDistinctTopic = async(req, res, next) => {
-    try {
-        const distinctTopic = await Data.distinct("topic");
-        res.locals.distinctTopic = distinctTopic;
-        res.json(distinctTopic);
-        next();
-    } catch (error) {
-        console.error("Error retrieving distinct relevance:", error);
-        res.status(500).json({ message: "Internal Server Error" });
-    }
-};
-
-const dataByTopics = (req, res) => {
-    try {
-        const endYear = req.params.endYear;
-        const sector = req.params.sector;
-        Data.find({ end_year: endYear, sector: sector }).then((result) => {
-            const intensity = result.map((entry) => ({
-                topic: entry.topic,
-                intensity: entry.intensity,
-                relevance: entry.relevance,
-                likelihood: entry.likelihood,
-            }));
-            res.json(intensity);
+     
+ const apiFeature=  new  Apifeatures(Data.find(), req.query).filter();
+ console.log(req.query)
+ let data = await apiFeature.query;
+ let intensity=[]
+ data.map((entry) => {
+    if (entry.end_year !== ''&& entry.relevance !== ''&& entry.likelihood !== '' && entry.intensity !== '') {
+    intensity.push({
+            end_year: entry.end_year,
+            intensity: entry.intensity,
+            relevance: entry.relevance,
+            likelihood: entry.likelihood,
         });
+    }
+  });
+console.log(intensity)
+ res.json(intensity)
     } catch (error) {
         console.log(error);
     }
 };
 
 module.exports = {
-    getDistinctIntensities,
-    getDistinctImpact,
-    getDistinctSector,
-    getDistinctTopic,
-    dataByTopics
+
+    bySectorEndYear,
+    bySectorAndTopic
 }
