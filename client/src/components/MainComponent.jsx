@@ -1,17 +1,13 @@
 import React from "react";
 import Header from "./Header";
 import StatisticsCard from "./StatisticalCard/StatisticsCard";
+import BarComponent from "./visualizer/BarComponent";
 
 const MainComponent = () => {
   return (
     <div className="w-full">
       <Header />
-      <div className="flex mt-6 justify-between">
-        <StatisticsCard />
-        <StatisticsCard />
-        <StatisticsCard />
-        <StatisticsCard />
-      </div>
+      <BarComponent/>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
-import SelecComponent from "./SelecComponent";
+import { Card } from "@material-tailwind/react";
+import SelecComponent from "../SelecComponent";
 import {
   BarElement,
   CategoryScale,
@@ -16,7 +16,7 @@ ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const BarComponent = () => {
   const [responseData, setData] = useState(null);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -59,10 +59,20 @@ const BarComponent = () => {
     ],
   };
   return (
-    <div>
-      <SelecComponent />
+    <Card className="p-4 bg-white border-gray-500 border rounded-md ">
+      <header className="p-2 flex justify-between">
+        <div>
+          <span className="text-[16px] text-[#2F2B3DC7] font-semibold">
+            Topics Insights
+          </span>
+          <p className="text-[14px] ">
+            Topic data according to end year and sector
+          </p>
+        </div>
+        <SelecComponent/>
+      </header>
       <Bar data={data} options={{ responsive: true }} />
-    </div>
+    </Card>
   );
 };
 

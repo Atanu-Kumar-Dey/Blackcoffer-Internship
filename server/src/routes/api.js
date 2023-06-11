@@ -8,6 +8,7 @@ router.get("", (req, res) => {
 });
 
 
+router.route("/topic").get(dataControllers.getDistinctSector)
 router.route("/sector-endYear").get(dataControllers.bySectorEndYear)
 router.route("/sector-topic").get(dataControllers.bySectorAndTopic)
 
