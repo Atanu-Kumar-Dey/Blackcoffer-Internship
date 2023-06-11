@@ -16,6 +16,7 @@ ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const BarComponent = () => {
   const [responseData, setData] = useState(null);
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
