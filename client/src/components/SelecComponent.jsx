@@ -19,8 +19,8 @@ export default function SelecComponent() {
   }, []);
    
   return (
-    <div className="w-auto">
-      <Select value={sector} className="text-[16px]" label="Select Sector">
+    <div className="">
+      <Select value={sector} className="text-[12px]" label="Select Sector">
         
         {
           responseData && responseData.map((result,index)=><Option onClick={()=>setsector(result)} value={result} key={index}>{result}</Option>)

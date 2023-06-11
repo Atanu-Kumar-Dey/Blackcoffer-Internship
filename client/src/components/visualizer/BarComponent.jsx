@@ -59,7 +59,7 @@ const BarComponent = () => {
     ],
   };
   return (
-    <Card className="p-4 bg-white border-gray-500 border rounded-md ">
+    <Card className="p-4 bg-white border-gray-500 border rounded-md m-4">
       <header className="p-2 flex justify-between">
         <div>
           <span className="text-[16px] text-[#2F2B3DC7] font-semibold">
@@ -69,7 +69,10 @@ const BarComponent = () => {
             Topic data according to end year and sector
           </p>
         </div>
-        <SelecComponent/>
+        <div className="flex gap-2">
+          <SelecComponent />
+          <SelecComponent />
+        </div>
       </header>
       <Bar data={data} options={{ responsive: true }} />
     </Card>
