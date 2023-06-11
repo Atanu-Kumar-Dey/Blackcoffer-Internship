@@ -40,7 +40,7 @@ const getDistinctTopic = async(req, res, next) => {
     try {
         const distinctTopic = await Data.distinct("topic");
         res.locals.distinctTopic = distinctTopic;
-        res.send(distinctTopic);
+        res.json(distinctTopic);
         next();
     } catch (error) {
         console.error("Error retrieving distinct relevance:", error);
@@ -48,9 +48,28 @@ const getDistinctTopic = async(req, res, next) => {
     }
 };
 
+const dataByTopics = (req, res) => {
+    try {
+        const endYear = req.params.endYear;
+        const sector = req.params.sector;
+        Data.find({ end_year: endYear, sector: sector }).then((result) => {
+            const intensity = result.map((entry) => ({
+                topic: entry.topic,
+                intensity: entry.intensity,
+                relevance: entry.relevance,
+                likelihood: entry.likelihood,
+            }));
+            res.json(intensity);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 module.exports = {
     getDistinctIntensities,
     getDistinctImpact,
     getDistinctSector,
-    getDistinctTopic
-};
+    getDistinctTopic,
+    dataByTopics
+}

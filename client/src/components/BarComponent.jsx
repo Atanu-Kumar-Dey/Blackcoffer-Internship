@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+import SelecComponent from "./SelecComponent";
 import {
   BarElement,
   CategoryScale,
@@ -19,7 +20,7 @@ const BarComponent = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:4000/api/data/2018/Energy"
+          "http://localhost:4000/api/2018/Energy"
         );
         const data = response.data;
         setData(data);
@@ -53,11 +54,12 @@ const BarComponent = () => {
         backgroundColor: "yellow",
         borderolor: "black",
         borderWidth: 1,
-      }
+      },
     ],
   };
   return (
-    <div >
+    <div>
+      <SelecComponent />
       <Bar data={data} options={{ responsive: true }} />
     </div>
   );
