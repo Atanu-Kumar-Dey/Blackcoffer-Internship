@@ -16,8 +16,8 @@ ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const BarComponent = () => {
   const [responseData, setData] = useState(null);
-  const [sector, setSector] = useState('Energy');
-  const [end_year, setEnd_year] = useState('2018');
+  const [sector, setSector] = useState("Energy");
+  const [end_year, setEnd_year] = useState("2018");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,8 +34,8 @@ const BarComponent = () => {
       }
     };
     fetchData();
-  }, [sector,end_year]);
- 
+  }, [sector, end_year]);
+
   const data = {
     labels: responseData?.map((item) => item.topic),
     datasets: [
@@ -73,9 +73,21 @@ const BarComponent = () => {
             Topic data according to end year and sector
           </p>
         </div>
-        <SelecComponent setsector={setSector} label={"Select Sector"} sector={sector} apiValue={'sector'}/>
-        <SelecComponent setsector={setEnd_year} label={"Select End Year"} sector={end_year} apiValue={'end_Year'}/>
-
+        <div className="flex gap-2">
+          <SelecComponent
+            setsector={setSector}
+            label={"Select Sector"}
+            sector={sector}
+            apiValue={"sector"}
+          />
+          <SelecComponent
+            setsector={setEnd_year}
+            label={"Select End Year"}
+            sector={end_year}
+            apiValue={"end_Year"}
+            
+          />
+        </div>
       </header>
       <Bar data={data} options={{ responsive: true }} />
     </Card>

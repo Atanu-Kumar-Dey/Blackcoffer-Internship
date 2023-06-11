@@ -22,7 +22,7 @@ export default function SelecComponent({sector,setsector,label,apiValue}) {
    
   return (
     <div className="w-auto">
-      <Select value={sector} className="text-[16px]" label={label}>
+      <Select value={sector} className="text-[16px] " label={label}>
         
         {
           responseData && responseData.map((result,index)=><Option onClick={()=>setsector(result)} value={result} key={index}>{result}</Option>)

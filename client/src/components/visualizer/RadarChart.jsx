@@ -7,14 +7,22 @@ import {
   Legend,
   PointElement,
   RadialLinearScale,
+  Filler,
 } from "chart.js";
-ChartJS.register(Tooltip, LineElement, Legend, RadialLinearScale, PointElement);
-
+ChartJS.register(
+  Tooltip,
+  LineElement,
+  Legend,
+  RadialLinearScale,
+  PointElement,
+  Filler
+);
+import { Radar } from "react-chartjs-2";
 import { Card } from "@material-tailwind/react";
 import SelecComponent from "../SelecComponent";
 
 function RadarChart() {
-  const [data, setData] = useState({
+  const data = {
     labels: [
       "Jan",
       "Feb",
@@ -31,46 +39,45 @@ function RadarChart() {
     ],
     datasets: [
       {
-        label: "First Dataset",
-        data: [10, 20, 30, 42, 51, 82, 31, 59, 61, 73, 91, 58],
-        backgroundColor: "yellow",
-        borderColor: "green",
-        tension: 0.4,
-        fill: true,
-        pointStyle: "rect",
-        pointBorderColor: "blue",
-        pointBackgroundColor: "#fff",
-        showLine: true,
-      },
-      {
         label: "intensity",
         data: [10, 20, 30, 42, 51, 82, 31, 59, 61, 73, 91, 58],
-
-        borderColor: "green",
-        tension: 0.4,
-        fill: true,
-        pointStyle: "rect",
-        pointBorderColor: "blue",
-        pointBackgroundColor: "#fff",
-        showLine: true,
+        backgroundColor: "cyan",
+        backgroundColor: "cyan",
+        borderolor: "black",
+        borderWidth: 1,
       },
       {
         label: "relevance",
         data: [101, 201, 301, 142, 151, 182, 131, 159, 161, 173, 191, 158],
-        backgroundColor: "red",
-        borderColor: "red",
-        tension: 0.4,
-        fill: true,
-        pointStyle: "rect",
-        pointBorderColor: "blue",
-        pointBackgroundColor: "#fff",
-        showLine: true,
+
+        borderolor: "black",
+        borderWidth: 1,
+      },
+      {
+        label: "likelihood",
+        data: [10, 20, 30, 42, 51, 82, 31, 59, 61, 73, 91, 58],
+        borderolor: "black",
+        borderWidth: 1,
       },
     ],
-  });
+  };
   return (
     <Card className="p-4 bg-white border-gray-500 border rounded-md m-4 w-1/2">
-      <Line data={data} options={{ responsive: true }} />
+      <header className="p-2 flex justify-between  mb-2">
+        <div>
+          <span className="text-[12px] text-[#2F2B3DC7] font-semibold">
+            Yearly Data
+          </span>
+          <p className="text-[10px]">
+            Data of every end year according to sector and topic
+          </p>
+        </div>
+        <div>
+          <SelecComponent />
+          <SelecComponent />
+        </div>
+      </header>
+      <Radar data={data} options={{}} />
     </Card>
   );
 }

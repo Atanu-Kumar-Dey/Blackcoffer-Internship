@@ -46,7 +46,6 @@ function AreaChart() {
         backgroundColor: "yellow",
         borderColor: "green",
         tension: 0.4,
-        fill: true,
         pointStyle: "rect",
         pointBorderColor: "blue",
         pointBackgroundColor: "#fff",
@@ -58,7 +57,6 @@ function AreaChart() {
        
         borderColor: "green",
         tension: 0.4,
-        fill: true,
         pointStyle: "rect",
         pointBorderColor: "blue",
         pointBackgroundColor: "#fff",
@@ -70,7 +68,6 @@ function AreaChart() {
         backgroundColor: "red",
         borderColor: "red",
         tension: 0.4,
-        fill: true,
         pointStyle: "rect",
         pointBorderColor: "blue",
         pointBackgroundColor: "#fff",
