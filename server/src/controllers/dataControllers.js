@@ -6,14 +6,42 @@ const getDistinctSector = async(req, res, next) => {
     try {
         const distinctSector = await Data.distinct("sector");
         res.locals.distinctTopic = distinctSector;
-        res.json(distinctSector);
-        next();
+        
+        let returnData =[]
+        distinctSector.map((entry) => {
+            
+            if (entry !== '') {
+                returnData.push(entry)
+            }
+        })
+      
+        res.json(returnData);
+       
     } catch (error) {
         console.error("Error retrieving distinct relevance:", error);
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
+const getDistinctEndYear = async(req, res, next) => {
+    try {
+        const distinctEndYear = await Data.distinct("end_year");
+        res.locals.distinctTopic = distinctEndYear;
 
+        let returnData =[]
+        distinctEndYear.map((entry) => {
+            
+            if (entry !== '') {
+                returnData.push(entry)
+            }
+        })
+    
+        res.json(returnData);
+       
+    } catch (error) {
+        console.error("Error retrieving distinct relevance:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+};
 const bySectorEndYear = async(req, res) => {
     try {
 
@@ -27,7 +55,7 @@ const bySectorEndYear = async(req, res) => {
             relevance: entry.relevance,
             likelihood: entry.likelihood,
         }));
-        console.log(intensity)
+ 
         res.json(intensity)
     } catch (error) {
         console.log(error);
@@ -50,7 +78,7 @@ const bySectorAndTopic = async(req, res) => {
                 });
             }
         });
-        console.log(intensity)
+  
         res.json(intensity)
     } catch (error) {
         console.log(error);
@@ -60,5 +88,6 @@ const bySectorAndTopic = async(req, res) => {
 module.exports = {
     bySectorEndYear,
     bySectorAndTopic,
-    getDistinctSector
+    getDistinctSector,
+    getDistinctEndYear
 }

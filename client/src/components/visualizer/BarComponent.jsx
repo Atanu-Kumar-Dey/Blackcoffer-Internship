@@ -16,22 +16,26 @@ ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const BarComponent = () => {
   const [responseData, setData] = useState(null);
+  const [sector, setSector] = useState('Energy');
+  const [end_year, setEnd_year] = useState('2018');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:4000/api/sector-endYear?sector=Energy&end_year=2018"
+          `http://localhost:4000/api/sector-endYear?sector=${sector}&end_year=${end_year}`
         );
         const data = response.data;
         setData(data);
       } catch (error) {
+        console.log(sector);
+
         console.log(error);
       }
     };
     fetchData();
-  }, []);
-
+  }, [sector,end_year]);
+ 
   const data = {
     labels: responseData?.map((item) => item.topic),
     datasets: [
@@ -69,10 +73,9 @@ const BarComponent = () => {
             Topic data according to end year and sector
           </p>
         </div>
-        <div className="flex gap-2">
-          <SelecComponent />
-          <SelecComponent />
-        </div>
+        <SelecComponent setsector={setSector} label={"Select Sector"} sector={sector} apiValue={'sector'}/>
+        <SelecComponent setsector={setEnd_year} label={"Select End Year"} sector={end_year} apiValue={'end_Year'}/>
+
       </header>
       <Bar data={data} options={{ responsive: true }} />
     </Card>
