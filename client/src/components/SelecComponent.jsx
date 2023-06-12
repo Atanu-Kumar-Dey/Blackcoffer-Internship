@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 export default function SelecComponent({sector,setsector,label,apiValue}) {
  
-  console.log(apiValue);
+  console.log(apiValue+"apivalue");
   const [responseData, setData] = useState([]);
 
   useEffect(() => {
