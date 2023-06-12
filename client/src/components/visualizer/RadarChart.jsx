@@ -42,7 +42,6 @@ function RadarChart() {
         label: "intensity",
         data: [10, 20, 30, 42, 51, 82, 31, 59, 61, 73, 91, 58],
         backgroundColor: "cyan",
-        backgroundColor: "cyan",
         borderolor: "black",
         borderWidth: 1,
       },

@@ -9,7 +9,7 @@ router.get("", (req, res) => {
 
 
 router.route("/sector").get(dataControllers.getDistinctSector)
-router.route("/country").get(dataControllers.getDistinctCountry)
+router.route("/piepestal").get(dataControllers.getPiePestal)
 router.route("/end_Year").get(dataControllers.getDistinctEndYear)
 
 router.route("/sector-endYear").get(dataControllers.bySectorEndYear)
