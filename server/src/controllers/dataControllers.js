@@ -42,6 +42,26 @@ const getDistinctEndYear = async(req, res, next) => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
+const getDistinctTopic = async(req, res, next) => {
+    try {
+        const distinctTopic = await Data.distinct("topic");
+        res.locals.distinctTopic = distinctTopic;
+        
+        let returnData =[]
+        distinctTopic.map((entry) => {
+            
+            if (entry !== '') {
+                returnData.push(entry)
+            }
+        })
+    
+        res.json(returnData);
+       
+    } catch (error) {
+        console.error("Error retrieving distinct relevance:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+};
 const bySectorEndYear = async(req, res) => {
     try {
 
@@ -89,5 +109,6 @@ module.exports = {
     bySectorEndYear,
     bySectorAndTopic,
     getDistinctSector,
-    getDistinctEndYear
+    getDistinctEndYear,
+    getDistinctTopic
 }

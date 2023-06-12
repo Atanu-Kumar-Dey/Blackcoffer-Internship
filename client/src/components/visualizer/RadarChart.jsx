@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Line } from "react-chartjs-2";
+import axios from "axios";
 import {
   Chart as ChartJS,
   Tooltip,
@@ -22,40 +23,54 @@ import { Card } from "@material-tailwind/react";
 import SelecComponent from "../SelecComponent";
 
 function RadarChart() {
+  const [responseData, setResponseData] = useState([]);
+
+ 
+  const [sector, setSector] = useState('Energy');
+  const [end_year, setEnd_year] = useState("2018");
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const {data} = await axios.get(
+          `http://localhost:4000/api/sector-endYear?sector=${sector}&end_year=${end_year}`
+        );
+      
+      console.log(data);
+      setResponseData(data)
+
+      } catch (error) {
+      
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [sector, end_year]);
+  
   const data = {
-    labels: [
-      "Jan",
-      "Feb",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
+    labels: responseData?.map((item) => item.topic),
     datasets: [
       {
         label: "intensity",
-        data: [10, 20, 30, 42, 51, 82, 31, 59, 61, 73, 91, 58],
-        backgroundColor: "cyan",
+        data: responseData?.map((item) => item.intensity),
+        backgroundColor: "hsl(203, 79%, 66%)",
         backgroundColor: "cyan",
         borderolor: "black",
+      
         borderWidth: 1,
       },
       {
         label: "relevance",
-        data: [101, 201, 301, 142, 151, 182, 131, 159, 161, 173, 191, 158],
-
+        data:responseData?.map((item) => item.relevance),
+        backgroundColor: "red",
+      
         borderolor: "black",
         borderWidth: 1,
       },
       {
         label: "likelihood",
-        data: [10, 20, 30, 42, 51, 82, 31, 59, 61, 73, 91, 58],
+        backgroundColor: "yellow",
+      
+        data: responseData?.map((item) => item.likelihood),
         borderolor: "black",
         borderWidth: 1,
       },
@@ -72,9 +87,22 @@ function RadarChart() {
             Data of every end year according to sector and topic
           </p>
         </div>
-        <div>
-          <SelecComponent />
-          <SelecComponent />
+        <div className="">
+        <div className="w-1 my-2"><SelecComponent 
+            setsector={setSector}
+            label={"Select Sector"}
+            sector={sector}
+            apiValue={"sector"}
+          /></div>
+         <div className="my-4">
+         <SelecComponent
+            setsector={setEnd_year}
+            label={"Select End Year"}
+            sector={end_year}
+            apiValue={"end_Year"}
+            
+          />
+         </div>
         </div>
       </header>
       <Radar data={data} options={{}} />

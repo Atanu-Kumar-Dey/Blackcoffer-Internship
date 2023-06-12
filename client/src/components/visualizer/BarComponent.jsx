@@ -28,8 +28,7 @@ const BarComponent = () => {
         const data = response.data;
         setData(data);
       } catch (error) {
-        console.log(sector);
-
+      
         console.log(error);
       }
     };

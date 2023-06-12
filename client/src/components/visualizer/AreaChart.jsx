@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import { Line } from "react-chartjs-2";
+import axios from "axios";
 import {
   Chart as ChartJS,
   
@@ -24,57 +25,63 @@ ChartJS.register(
 import { Card } from "@material-tailwind/react";
 import SelecComponent from "../SelecComponent";
 function AreaChart() {
-  const [data, setData] = useState({
-    labels: [
-      "Jan",
-      "Feb",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
+  const [responseData, setResponseData] = useState([]);
+
+ 
+  const [sector, setSector] = useState('Energy');
+  const [topic, setTopic] = useState('oil');
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:4000/api/sector-topic?sector=${sector}&topic=${topic}`
+        );
+        const data = response.data;
+       console.log(data);
+       setResponseData(data)
+      } catch (error) {
+        
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [sector, topic]);
+ 
+  const data ={
+    labels: responseData?.map((item) => item.end_year),
     datasets: [
       {
-        label: "First Dataset",
-        data: [10, 20, 30, 42, 51, 82, 31, 59, 61, 73, 91, 58],
+        label: " intensity",
+        data: responseData?.map((item) => item.intensity),
         backgroundColor: "yellow",
         borderColor: "green",
         tension: 0.4,
-        pointStyle: "rect",
-        pointBorderColor: "blue",
-        pointBackgroundColor: "#fff",
-        showLine: true,
-      },
-      {
-        label: "intensity",
-        data: [10, 20, 30, 42, 51, 82, 31, 59, 61, 73, 91, 58],
-       
-        borderColor: "green",
-        tension: 0.4,
-        pointStyle: "rect",
+     
         pointBorderColor: "blue",
         pointBackgroundColor: "#fff",
         showLine: true,
       },
       {
         label: "relevance",
-        data: [101, 201, 301, 142, 151, 182, 131, 159, 161, 173, 191, 158],
-        backgroundColor: "red",
-        borderColor: "red",
+        data: responseData?.map((item) => item.relevance),
+        borderColor: "green",
         tension: 0.4,
         pointStyle: "rect",
         pointBorderColor: "blue",
         pointBackgroundColor: "#fff",
         showLine: true,
       },
+      {
+        label: "likelihood",
+        data: responseData?.map((item) => item.likelihood),
+        backgroundColor: "red",
+        borderColor: "red",
+        tension: 0.4,
+        pointBackgroundColor: "#fff",
+        showLine: true,
+      },
     ],
-  });
+  };
   return (
     <Card className="p-4 bg-white border-gray-500 border rounded-md m-4">
     <header className="p-2 flex justify-between">
@@ -87,8 +94,20 @@ function AreaChart() {
         </p>
       </div>
       <div className="flex gap-2">
-          <SelecComponent />
-          <SelecComponent />
+      <SelecComponent
+            setsector={setTopic}
+            label={"Select Topic"}
+            sector={topic}
+            apiValue={"topic"}
+            
+          />
+          <SelecComponent
+            setsector={setSector}
+            label={"Select Sector"}
+            sector={sector}
+            apiValue={"sector"}
+            
+          />
         </div>
     </header>
     <Line data={data} options={{ responsive: true }} />
